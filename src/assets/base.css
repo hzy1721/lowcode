@@ -2,6 +2,10 @@
 
 :root {
   --base-border-color: #DCDFE6;
+  --dark-border-color: #D4D7DE;
+  --darker-border-color: #CDD0D6;
+  --hover-border-color: #5584ff;
+  --active-border-color: #026cff;
   --brand-color: #409EFF;
 }
 
@@ -16,8 +20,6 @@
 
 body {
   min-height: 100vh;
-  line-height: 1.6;
-  font-size: 15px;
   color: var(--el-primary-text-color);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

@@ -7,8 +7,11 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Block: typeof import('./src/components/custom_components/Block.vue')['default']
     ComponentList: typeof import('./src/components/ComponentList.vue')['default']
+    copy: typeof import('./src/components/Editor copy.vue')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']
+    EditorContent: typeof import('./src/components/EditorContent.tsx')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -19,14 +22,23 @@ declare module '@vue/runtime-core' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTree: typeof import('element-plus/es')['ElTree']
+    H1: typeof import('./src/components/custom_components/H1.vue')['default']
+    H3: typeof import('./src/components/custom_components/H3.vue')['default']
     Inspector: typeof import('./src/components/Inspector.vue')['default']
     LibraryItem: typeof import('./src/components/LibraryItem.vue')['default']
     LibraryPanel: typeof import('./src/components/LibraryPanel.vue')['default']
+    Page: typeof import('./src/components/custom_components/Page.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TreePanel: typeof import('./src/components/TreePanel.vue')['default']
+    UIBlock: typeof import('./src/components/custom_components/UIBlock.vue')['default']
+    UIButton: typeof import('./src/components/custom_components/UIButton.vue')['default']
+    UIH1: typeof import('./src/components/custom_components/UIH1.vue')['default']
+    UIH3: typeof import('./src/components/custom_components/UIH3.vue')['default']
+    UIPage: typeof import('./src/components/custom_components/UIPage.vue')['default']
   }
 }

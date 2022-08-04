@@ -47,7 +47,6 @@ const data: Tree[] = [
   border-style: solid;
   border-width: 0 1px 0 0;
   padding: 1em;
-  height: 45%;
 }
 
 h3 {
