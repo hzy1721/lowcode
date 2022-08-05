@@ -2,21 +2,19 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "UIButton",
+  name: "UILink",
 });
 </script>
 
 <script setup lang="ts">
 defineProps<{
-  text: string;
-  onClick: (payload: MouseEvent) => void;
+  text: string,
+  url: string
 }>();
 </script>
 
 <template>
-  <el-button @click="onClick">{{ text }}</el-button>
+  <a :href="url">{{ text }}</a>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

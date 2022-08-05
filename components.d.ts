@@ -9,7 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Block: typeof import('./src/components/custom_components/Block.vue')['default']
     ComponentList: typeof import('./src/components/ComponentList.vue')['default']
-    copy: typeof import('./src/components/Editor copy.vue')['default']
+    copy: typeof import('./src/components/custom_components/UIH1 copy.vue')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']
     EditorContent: typeof import('./src/components/EditorContent.tsx')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -37,8 +37,17 @@ declare module '@vue/runtime-core' {
     TreePanel: typeof import('./src/components/TreePanel.vue')['default']
     UIBlock: typeof import('./src/components/custom_components/UIBlock.vue')['default']
     UIButton: typeof import('./src/components/custom_components/UIButton.vue')['default']
+    UIDivider: typeof import('./src/components/custom_components/UIDivider.vue')['default']
+    UIEmpty: typeof import('./src/components/custom_components/UIEmpty.vue')['default']
     UIH1: typeof import('./src/components/custom_components/UIH1.vue')['default']
+    UIH12: typeof import('./src/components/custom_components/UIH12.vue')['default']
+    UIH2: typeof import('./src/components/custom_components/UIH2.vue')['default']
     UIH3: typeof import('./src/components/custom_components/UIH3.vue')['default']
+    UIH4: typeof import('./src/components/custom_components/UIH4.vue')['default']
+    UIH5: typeof import('./src/components/custom_components/UIH5.vue')['default']
+    UIH6: typeof import('./src/components/custom_components/UIH6.vue')['default']
+    UILink: typeof import('./src/components/custom_components/UILink.vue')['default']
     UIPage: typeof import('./src/components/custom_components/UIPage.vue')['default']
+    UIText: typeof import('./src/components/custom_components/UIText.vue')['default']
   }
 }

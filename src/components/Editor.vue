@@ -14,7 +14,7 @@ import EditorContent from "./EditorContent";
   padding: 1em;
 
   .hover {
-    border: 1px dashed var(--hover-border-color);
+    outline: 1px dashed var(--hover-border-color);
   }
 
   .near-left {

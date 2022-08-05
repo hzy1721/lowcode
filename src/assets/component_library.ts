@@ -1,6 +1,6 @@
 export default {
   基础: ['UIH1', 'UIH2', 'UIH3', 'UIH4', 'UIH5', 'UIH6', 'UIText', 'UILink', 'UIButton'],
-  布局: ['UIBlock', 'ElDivider'],
+  布局: ['UIBlock', 'UIDivider'],
   // 导航: [
   //   {
   //     name: "PageHeader",

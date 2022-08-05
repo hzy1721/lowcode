@@ -16,6 +16,7 @@ import Inspector from "../components/Inspector.vue";
       </RouterLink>
       <div class="btn-group">
         <el-button> 保存到本地 </el-button>
+        <el-button> 重置页面 </el-button>
         <el-button type="primary"> 预览 </el-button>
         <el-button type="primary"> 构建 </el-button>
       </div>

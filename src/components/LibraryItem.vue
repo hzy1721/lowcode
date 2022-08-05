@@ -1,11 +1,16 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
+  type: string,
   component: { name: string, zh: string }
 }>();
+
+function dragstartHandler(e: DragEvent) {
+  e.dataTransfer?.setData('text/plain', props.type);
+}
 </script>
 
 <template>
-  <div class="library-item" draggable="true">
+  <div class="library-item" draggable="true" @dragstart="dragstartHandler">
     <div class="name">{{ component.name }}</div>
     <div class="zh">{{ component.zh }}</div>
   </div>

@@ -13,6 +13,7 @@ export default defineComponent({
 <template>
   <div class="ui-block">
     <slot></slot>
+    <UIEmpty v-if="!$slots.default" />
   </div>
 </template>
 

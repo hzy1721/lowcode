@@ -15,6 +15,7 @@ const searchText = ref("");
         <el-scrollbar height="313px">
           <template v-for="item in value">
             <LibraryItem
+              :type="item"
               :component="componentInfo[item]"
               v-if="
                 searchText === '' ||

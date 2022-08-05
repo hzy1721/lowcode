@@ -2,21 +2,18 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "UIButton",
+  name: "UIH4",
 });
 </script>
 
 <script setup lang="ts">
 defineProps<{
   text: string;
-  onClick: (payload: MouseEvent) => void;
 }>();
 </script>
 
 <template>
-  <el-button @click="onClick">{{ text }}</el-button>
+  <h4>{{ text }}</h4>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

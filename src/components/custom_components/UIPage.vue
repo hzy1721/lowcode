@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, type Ref } from "vue";
 
 export default defineComponent({
   name: "UIPage",
@@ -7,15 +7,20 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
-
+import UIEmpty from "./UIEmpty.vue";
 </script>
 
 <template>
-  <div>
+  <div class="ui-page">
     <slot></slot>
+    <UIEmpty v-if="!$slots.default" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-
+.ui-page {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+}
 </style>
