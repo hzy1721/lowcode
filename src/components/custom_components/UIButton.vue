@@ -14,7 +14,7 @@ defineProps<{
 </script>
 
 <template>
-  <el-button @click="onClick">{{ text }}</el-button>
+  <el-button @click="onClick" :plain="true">{{ text }}</el-button>
 </template>
 
 <style lang="scss" scoped>

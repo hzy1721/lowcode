@@ -6,6 +6,7 @@ import {
   type VNode,
 } from "vue";
 import componentInfo from "@/assets/component_info";
+import { useAppStore } from "@/stores/app";
 
 class VComponent {
   name: string;
@@ -141,6 +142,26 @@ function layerIndices(vcomponent: VComponent, id: string): number[] {
   return [];
 }
 
+function searchVcomponentDeep(vcomponent: VComponent, id: string): VComponent | undefined {
+  if (vcomponent.name === id) {
+    return vcomponent;
+  }
+  if (vcomponent.children) {
+    for (let i = 0; i < vcomponent.children.length; ++i) {
+      const child = vcomponent.children[i];
+      const result = searchVcomponentDeep(child, id);
+      if (result) {
+        return result;
+      }
+    }
+  }
+  return undefined;
+}
+
+export function searchVcomponent(id: string): VComponent | undefined {
+  return searchVcomponentDeep(page, id);
+}
+
 function getUniqueName(vcomponentType: string): string {
   let name = vcomponentType,
     idx = 2;
@@ -260,6 +281,8 @@ const editableProps = (vcomponent: VComponent) => {
         "text/indices",
         JSON.stringify(layerIndices(page, node.id))
       );
+      const appStore = useAppStore();
+      appStore.activeComponent = '';
     },
     onDragover: (e: DragEvent) => {
       const node = e.currentTarget as HTMLElement;
@@ -321,12 +344,13 @@ function renderDeep(vcomponent: VComponent): VNode {
   vcomponent.children?.forEach((child) => {
     children.push(renderDeep(child));
   });
+  const appStore = useAppStore();
   return h(
     resolveComponent(vcomponent.type),
     {
       ...vcomponent.props,
       ...editableProps(vcomponent),
-      class: "root",
+      class: ["root", { focus: appStore.activeComponent === vcomponent.name }],
       id: vcomponent.name,
       draggable: "true",
     },
@@ -334,13 +358,9 @@ function renderDeep(vcomponent: VComponent): VNode {
   );
 }
 
-function render() {
-  return renderDeep(page);
-}
-
 export default defineComponent({
   name: "EditorContent",
-  setup() {
-    return render;
-  },
+  render() {
+    return renderDeep(page);
+  }
 });

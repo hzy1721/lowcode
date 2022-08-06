@@ -6,7 +6,9 @@
   --darker-border-color: #CDD0D6;
   --hover-border-color: #5584ff;
   --active-border-color: #026cff;
+  --focus-border-color: #187aff;
   --brand-color: #409EFF;
+  --secondary-text-color: #909399;
 }
 
 *,

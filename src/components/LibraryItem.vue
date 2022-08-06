@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAppStore } from "@/stores/app";
+
 const props = defineProps<{
   type: string,
   component: { name: string, zh: string }
@@ -6,6 +8,8 @@ const props = defineProps<{
 
 function dragstartHandler(e: DragEvent) {
   e.dataTransfer?.setData('text/plain', props.type);
+  const appStore = useAppStore();
+  appStore.activeComponent = '';
 }
 </script>
 

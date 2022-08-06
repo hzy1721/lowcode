@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useAppStore } from "@/stores/app";
 
 export default defineComponent({
   name: "UIEmpty",
@@ -29,6 +30,13 @@ function dragoverHandler(e: DragEvent) {
   e.stopPropagation();
   e.preventDefault();
 }
+
+function clickHandler(e: MouseEvent) {
+  const node = e.target as HTMLElement;
+  const appStore = useAppStore();
+  appStore.activeComponent = node.parentElement!.id;
+  e.stopPropagation();
+}
 </script>
 
 <template>
@@ -37,6 +45,7 @@ function dragoverHandler(e: DragEvent) {
     @dragenter="dragenterHandler"
     @dragleave="dragleaveHandler"
     @dragover="dragoverHandler"
+    @click="clickHandler"
   >
     <div>拖拽组件到这里</div>
   </div>
