@@ -2,13 +2,18 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "UIPage",
+  name: "UIPageEdit",
 });
+</script>
+
+<script setup lang="ts">
+import UIEmpty from "./UIEmpty.vue";
 </script>
 
 <template>
   <div class="ui-page">
     <slot></slot>
+    <UIEmpty v-if="!$slots.default" />
   </div>
 </template>
 

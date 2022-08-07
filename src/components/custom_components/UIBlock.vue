@@ -6,18 +6,13 @@ export default defineComponent({
 });
 </script>
 
-<script setup lang="ts">
-
-</script>
-
 <template>
   <div class="ui-block">
     <slot></slot>
-    <UIEmpty v-if="!$slots.default" />
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .ui-block {
   padding: 20px;
 }

@@ -142,7 +142,14 @@ function layerIndices(vcomponent: VComponent, id: string): number[] {
   return [];
 }
 
-function searchVcomponentDeep(vcomponent: VComponent, id: string): VComponent | undefined {
+function getIndicesById(id: string): number[] {
+  return layerIndices(page, id);
+}
+
+function searchVcomponentDeep(
+  vcomponent: VComponent,
+  id: string
+): VComponent | undefined {
   if (vcomponent.name === id) {
     return vcomponent;
   }
@@ -166,7 +173,7 @@ function getUniqueName(vcomponentType: string): string {
   let name = vcomponentType,
     idx = 2;
   while (nameSet.has(name)) {
-    name = name + idx;
+    name = vcomponentType + idx;
     ++idx;
   }
   nameSet.add(name);
@@ -250,6 +257,11 @@ function removeVcomponent(indices: number[]): VComponent {
   return result;
 }
 
+export function removeVcomponentById(id: string): VComponent {
+  const indices = getIndicesById(id);
+  return removeVcomponent(indices);
+}
+
 function moveVcomponent(
   sourceIndices: number[],
   node: HTMLElement,
@@ -260,10 +272,13 @@ function moveVcomponent(
 }
 
 const editableProps = (vcomponent: VComponent) => {
-  const dragNearEdge =
-    componentInfo[vcomponent.type].editType === "block"
-      ? blockNearEdge
-      : inlineNearEdge;
+  let dragNearEdge = blockNearEdge;
+  const editType = componentInfo[vcomponent.type].editType;
+  if (editType === "inline") {
+    dragNearEdge = inlineNearEdge;
+  } else if (editType === "none") {
+    dragNearEdge = () => {};
+  }
   return {
     onMouseenter: (e: MouseEvent) => {
       const node = e.target as HTMLElement;
@@ -282,7 +297,7 @@ const editableProps = (vcomponent: VComponent) => {
         JSON.stringify(layerIndices(page, node.id))
       );
       const appStore = useAppStore();
-      appStore.activeComponent = '';
+      appStore.activeComponent = "";
     },
     onDragover: (e: DragEvent) => {
       const node = e.currentTarget as HTMLElement;
@@ -346,7 +361,7 @@ function renderDeep(vcomponent: VComponent): VNode {
   });
   const appStore = useAppStore();
   return h(
-    resolveComponent(vcomponent.type),
+    resolveComponent(vcomponent.type + "Edit"),
     {
       ...vcomponent.props,
       ...editableProps(vcomponent),
@@ -362,5 +377,5 @@ export default defineComponent({
   name: "EditorContent",
   render() {
     return renderDeep(page);
-  }
+  },
 });

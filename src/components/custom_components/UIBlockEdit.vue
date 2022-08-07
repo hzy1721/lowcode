@@ -2,20 +2,23 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "UIPage",
+  name: "UIBlockEdit",
 });
 </script>
 
+<script setup lang="ts">
+
+</script>
+
 <template>
-  <div class="ui-page">
+  <div class="ui-block">
     <slot></slot>
+    <UIEmpty v-if="!$slots.default" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.ui-page {
-  width: 100%;
-  height: 100%;
-  padding: 5px;
+.ui-block {
+  padding: 20px;
 }
 </style>

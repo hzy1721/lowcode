@@ -55,8 +55,8 @@ function clickHandler(e: MouseEvent) {
 .ui-empty {
   position: absolute;
   width: 80%;
-  height: 80%;
-  top: 10%;
+  height: 70%;
+  top: 15%;
   left: 10%;
   border-radius: 10px;
   background-color: #f1f1f1;

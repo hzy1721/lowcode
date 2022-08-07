@@ -2,20 +2,20 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "UIPage",
+  name: "UIDividerEdit",
 });
 </script>
 
+<script setup lang="ts"></script>
+
 <template>
-  <div class="ui-page">
-    <slot></slot>
+  <div class="ui-divider">
+    <el-divider style="pointer-events: none"></el-divider>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.ui-page {
-  width: 100%;
-  height: 100%;
-  padding: 5px;
+.ui-divider {
+  padding: 5px 0;
 }
 </style>

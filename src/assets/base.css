@@ -15,7 +15,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
   position: relative;
   border-color: var(--base-border-color);
 }
@@ -33,4 +32,8 @@ body {
 a {
   text-decoration: none;
   color: var(--el-primary-text-color);
+}
+
+h3 {
+  margin: 5px 0;
 }

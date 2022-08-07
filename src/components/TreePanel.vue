@@ -49,10 +49,6 @@ const data: Tree[] = [
   padding: 1em;
 }
 
-h3 {
-  margin-bottom: .5em;
-}
-
 .tree {
   overflow: auto;
 }
