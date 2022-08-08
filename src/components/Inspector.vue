@@ -40,8 +40,12 @@ const propSchema = computed(() => {
             {{ schema.name }}
             <span class="prop-desc">({{ schema.desc }})</span>:
           </div>
+          <el-input-number
+            v-if="schema.type === 'number'"
+            v-model="vcomponent.props![schema.name]"
+          />
           <el-input
-            v-if="schema.type === 'string'"
+            v-else-if="schema.type === 'string'"
             v-model="vcomponent.props![schema.name]"
           >
           </el-input>

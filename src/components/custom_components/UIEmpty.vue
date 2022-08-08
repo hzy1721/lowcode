@@ -12,18 +12,18 @@ function dragenterHandler(e: DragEvent) {
   const node = e.target as HTMLElement;
   node.classList.add("dragover");
   const parent = node.parentElement;
-  const classes = ['near-top', 'near-bottom', 'near-left', 'near-right'];
+  const classes = ["near-top", "near-bottom", "near-left", "near-right"];
   classes.forEach((cls) => {
     parent?.classList.remove(cls);
   });
-  parent?.classList.add('inner');
+  parent?.classList.add("inner");
 }
 
 function dragleaveHandler(e: DragEvent) {
   const node = e.target as HTMLElement;
   node.classList.remove("dragover");
   const parent = node.parentElement;
-  parent?.classList.remove('inner');
+  parent?.classList.remove("inner");
 }
 
 function dragoverHandler(e: DragEvent) {
@@ -32,10 +32,12 @@ function dragoverHandler(e: DragEvent) {
 }
 
 function clickHandler(e: MouseEvent) {
-  const node = e.target as HTMLElement;
-  const appStore = useAppStore();
-  appStore.activeComponent = node.parentElement!.id;
-  e.stopPropagation();
+  const node = e.currentTarget as HTMLElement;
+  if (node.classList.contains("ui-empty")) {
+    const appStore = useAppStore();
+    appStore.activeComponent = node.parentElement!.id;
+    e.stopPropagation();
+  }
 }
 </script>
 

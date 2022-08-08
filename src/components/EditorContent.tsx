@@ -253,12 +253,12 @@ function removeVcomponent(indices: number[]): VComponent {
   }
   const index = indices[indices.length - 1];
   const result = targetChildren.splice(index, 1)[0];
-  console.dir(page);
   return result;
 }
 
 export function removeVcomponentById(id: string): VComponent {
   const indices = getIndicesById(id);
+  nameSet.delete(id);
   return removeVcomponent(indices);
 }
 
@@ -360,17 +360,56 @@ function renderDeep(vcomponent: VComponent): VNode {
     children.push(renderDeep(child));
   });
   const appStore = useAppStore();
-  return h(
-    resolveComponent(vcomponent.type + "Edit"),
-    {
-      ...vcomponent.props,
-      ...editableProps(vcomponent),
-      class: ["root", { focus: appStore.activeComponent === vcomponent.name }],
-      id: vcomponent.name,
-      draggable: "true",
-    },
-    children.length > 0 ? () => children : undefined
-  );
+  const wrapTypeSet = new Set(["UILink", "UIButton"]);
+  const editTypeSet = new Set(["UIPage", "UIBlock", "ElImage"]);
+  return (vcomponent.type.startsWith("El") && vcomponent.type !== "ElImage") ||
+    wrapTypeSet.has(vcomponent.type)
+    ? h(
+        "div",
+        {
+          ...editableProps(vcomponent),
+          class: [
+            "root",
+            { focus: appStore.activeComponent === vcomponent.name },
+          ],
+          id: vcomponent.name,
+          draggable: "true",
+          style: {
+            display:
+              componentInfo[vcomponent.type].editType === "inline"
+                ? "inline-block"
+                : "block",
+          },
+        },
+        h(
+          resolveComponent(vcomponent.type),
+          {
+            ...vcomponent.props,
+            style: {
+              pointerEvents: "none",
+            },
+          },
+          children.length > 0 ? () => children : undefined
+        )
+      )
+    : h(
+        resolveComponent(
+          editTypeSet.has(vcomponent.type)
+            ? vcomponent.type + "Edit"
+            : vcomponent.type
+        ),
+        {
+          ...vcomponent.props,
+          ...editableProps(vcomponent),
+          class: [
+            "root",
+            { focus: appStore.activeComponent === vcomponent.name },
+          ],
+          id: vcomponent.name,
+          draggable: "true",
+        },
+        children.length > 0 ? () => children : undefined
+      );
 }
 
 export default defineComponent({
