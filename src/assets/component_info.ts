@@ -2,8 +2,14 @@ interface IComponent {
   name: string;
   zh: string;
   editType: "block" | "inline" | "none";
-  defaultProps?: Record<string, any>;
   propSchema?: {
+    name: string;
+    desc: string;
+    type: string;
+    candidates?: string[];
+    defaultValue: any;
+  }[];
+  styleSchema?: {
     name: string;
     desc: string;
     type: string;
@@ -17,14 +23,30 @@ const componentInfo: Record<string, IComponent> = {
     name: "Page",
     zh: "页面",
     editType: "none",
+    styleSchema: [
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+        defaultValue: "transparent",
+      },
+    ],
   },
   // 布局
   UIBlock: {
     name: "Block",
     zh: "区块",
     editType: "block",
+    styleSchema: [
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+        defaultValue: "transparent",
+      },
+    ],
   },
-  UIDivider: {
+  ElDivider: {
     name: "Divider",
     zh: "分割线",
     editType: "block",
@@ -34,9 +56,6 @@ const componentInfo: Record<string, IComponent> = {
     name: "H1",
     zh: "一级标题",
     editType: "block",
-    defaultProps: {
-      text: "一级标题",
-    },
     propSchema: [
       {
         name: "text",
@@ -45,14 +64,23 @@ const componentInfo: Record<string, IComponent> = {
         defaultValue: "一级标题",
       },
     ],
+    styleSchema: [
+      {
+        name: "color",
+        desc: "文字颜色",
+        type: "color",
+      },
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+      },
+    ],
   },
   UIH2: {
     name: "H2",
     zh: "二级标题",
     editType: "block",
-    defaultProps: {
-      text: "二级标题",
-    },
     propSchema: [
       {
         name: "text",
@@ -61,14 +89,23 @@ const componentInfo: Record<string, IComponent> = {
         defaultValue: "二级标题",
       },
     ],
+    styleSchema: [
+      {
+        name: "color",
+        desc: "文字颜色",
+        type: "color",
+      },
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+      },
+    ],
   },
   UIH3: {
     name: "H3",
     zh: "三级标题",
     editType: "block",
-    defaultProps: {
-      text: "三级标题",
-    },
     propSchema: [
       {
         name: "text",
@@ -77,14 +114,23 @@ const componentInfo: Record<string, IComponent> = {
         defaultValue: "三级标题",
       },
     ],
+    styleSchema: [
+      {
+        name: "color",
+        desc: "文字颜色",
+        type: "color",
+      },
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+      },
+    ],
   },
   UIH4: {
     name: "H4",
     zh: "四级标题",
     editType: "block",
-    defaultProps: {
-      text: "四级标题",
-    },
     propSchema: [
       {
         name: "text",
@@ -93,14 +139,23 @@ const componentInfo: Record<string, IComponent> = {
         defaultValue: "四级标题",
       },
     ],
+    styleSchema: [
+      {
+        name: "color",
+        desc: "文字颜色",
+        type: "color",
+      },
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+      },
+    ],
   },
   UIH5: {
     name: "H5",
     zh: "五级标题",
     editType: "block",
-    defaultProps: {
-      text: "五级标题",
-    },
     propSchema: [
       {
         name: "text",
@@ -109,14 +164,23 @@ const componentInfo: Record<string, IComponent> = {
         defaultValue: "五级标题",
       },
     ],
+    styleSchema: [
+      {
+        name: "color",
+        desc: "文字颜色",
+        type: "color",
+      },
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+      },
+    ],
   },
   UIH6: {
     name: "H6",
     zh: "六级标题",
     editType: "block",
-    defaultProps: {
-      text: "六级标题",
-    },
     propSchema: [
       {
         name: "text",
@@ -125,14 +189,23 @@ const componentInfo: Record<string, IComponent> = {
         defaultValue: "六级标题",
       },
     ],
+    styleSchema: [
+      {
+        name: "color",
+        desc: "文字颜色",
+        type: "color",
+      },
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+      },
+    ],
   },
   UIText: {
     name: "Text",
     zh: "文本",
     editType: "inline",
-    defaultProps: {
-      text: "文本",
-    },
     propSchema: [
       {
         name: "text",
@@ -141,15 +214,23 @@ const componentInfo: Record<string, IComponent> = {
         defaultValue: "文本",
       },
     ],
+    styleSchema: [
+      {
+        name: "color",
+        desc: "文字颜色",
+        type: "color",
+      },
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+      },
+    ],
   },
   UILink: {
     name: "Link",
     zh: "链接",
     editType: "inline",
-    defaultProps: {
-      text: "链接",
-      url: "/",
-    },
     propSchema: [
       {
         name: "text",
@@ -164,15 +245,23 @@ const componentInfo: Record<string, IComponent> = {
         defaultValue: "/",
       },
     ],
+    styleSchema: [
+      {
+        name: "color",
+        desc: "文字颜色",
+        type: "color",
+      },
+      {
+        name: "backgroundColor",
+        desc: "背景颜色",
+        type: "color",
+      },
+    ],
   },
   UIButton: {
     name: "Button",
     zh: "按钮",
     editType: "inline",
-    defaultProps: {
-      text: "按钮",
-      onClick: () => console.log("点击按钮"),
-    },
     propSchema: [
       {
         name: "text",
@@ -185,14 +274,40 @@ const componentInfo: Record<string, IComponent> = {
   ElImage: {
     name: "Image",
     zh: "图片",
-    editType: 'block',
+    editType: "block",
     propSchema: [
       {
-        name: 'src',
-        desc: '图片URL',
-        type: 'string',
-      }
-    ]
+        name: "src",
+        desc: "图片URL",
+        type: "string",
+        defaultValue: "",
+      },
+    ],
+    styleSchema: [
+      {
+        name: "width",
+        desc: "图片宽度",
+        type: "number",
+      },
+      {
+        name: "height",
+        desc: "图片高度",
+        type: "number",
+      },
+    ],
+  },
+  UIVideo: {
+    name: "Video",
+    zh: "视频",
+    editType: "inline",
+    propSchema: [
+      {
+        name: "src",
+        desc: "视频URL",
+        type: "string",
+        defaultValue: "",
+      },
+    ],
   },
   // 导航
   ElPageHeader: {
@@ -341,10 +456,6 @@ const componentInfo: Record<string, IComponent> = {
         defaultValue: 100,
       },
     ],
-    defaultProps: {
-      type: "text",
-      maxlength: 100,
-    },
   },
   ElCascader: {
     name: "Cascader",

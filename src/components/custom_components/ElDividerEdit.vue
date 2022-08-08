@@ -2,20 +2,18 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "UIDivider",
+  name: "ElDividerEdit",
 });
 </script>
 
-<script setup lang="ts"></script>
-
 <template>
-  <div class="ui-divider">
+  <div class="el-divider-edit">
     <el-divider></el-divider>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.ui-divider {
+.el-divider-edit {
   padding: 5px 0;
 }
 </style>

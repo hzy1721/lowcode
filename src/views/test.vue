@@ -1,19 +1,17 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: "UIButton",
+  name: "Test",
 });
 </script>
 
 <script setup lang="ts">
-defineProps<{
-  text?: string;
-}>();
+const color = ref();
 </script>
 
 <template>
-  <el-button :plain="true">{{ text || '按钮' }}</el-button>
+  <el-color-picker v-model="color" />
 </template>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 export default {
-  布局: ["UIBlock", "UIDivider"],
+  布局: ["UIBlock", "ElDivider"],
   基础: [
     "UIH1",
     "UIH2",
@@ -11,6 +11,7 @@ export default {
     "UILink",
     "UIButton",
     "ElImage",
+    "UIVideo",
   ],
   // 导航: [
   //   "ElPageHeader",

@@ -12,12 +12,26 @@ const propSchema = computed(() => {
   }
   return componentInfo[vcomponent.value.type].propSchema;
 });
+const styleSchema = computed(() => {
+  if (!vcomponent.value) {
+    return undefined;
+  }
+  return componentInfo[vcomponent.value.type].styleSchema;
+});
+
+function currentStyleValue(name: string) {
+  const el = document.getElementById(vcomponent.value!.name);
+  if (!el || !(name in el.style)) {
+    return '';
+  }
+  return (el?.style as Record<string, any>)[name];
+}
 </script>
 
 <template>
   <div class="inspector">
     <div class="header">
-      <h3 v-if="vcomponent">{{ vcomponent?.name }} ({{ vcomponent?.type }})</h3>
+      <h3 v-if="vcomponent">{{ vcomponent?.name }} ({{ componentInfo[vcomponent?.type].zh }})</h3>
       <h3 v-else>未选中组件</h3>
       <el-popconfirm
         v-if="vcomponent && vcomponent.type !== 'UIPage'"
@@ -37,25 +51,28 @@ const propSchema = computed(() => {
         <div v-if="!vcomponent || !propSchema">没有可以设置的属性</div>
         <div v-else v-for="schema in propSchema" class="form-item">
           <div class="prop-name">
-            {{ schema.name }}
-            <span class="prop-desc">({{ schema.desc }})</span>:
+            {{ schema.desc }}
           </div>
           <el-input-number
             v-if="schema.type === 'number'"
-            v-model="vcomponent.props![schema.name]"
+            :modelValue="vcomponent.props![schema.name] || schema.defaultValue"
+            @update:modelValue="(newValue: number) => vcomponent!.props![schema.name] = newValue"
           />
           <el-input
             v-else-if="schema.type === 'string'"
-            v-model="vcomponent.props![schema.name]"
+            :modelValue="vcomponent.props![schema.name] || schema.defaultValue"
+            @update:modelValue="(newValue: string) => vcomponent!.props![schema.name] = newValue"
           >
           </el-input>
           <el-switch
             v-else-if="schema.type === 'boolean'"
-            v-model="vcomponent.props![schema.name]"
+            :modelValue="vcomponent.props![schema.name] || schema.defaultValue"
+            @update:modelValue="(newValue: boolean) => vcomponent!.props![schema.name] = newValue"
           />
           <el-select
             v-else-if="schema.type.endsWith('_select')"
-            v-model="vcomponent.props![schema.name]"
+            :modelValue="vcomponent.props![schema.name] || schema.defaultValue"
+            @update:modelValue="(newValue: string) => vcomponent!.props![schema.name] = newValue"
           >
             <el-option
               v-for="option in schema.candidates"
@@ -67,7 +84,48 @@ const propSchema = computed(() => {
           <el-divider />
         </div>
       </el-tab-pane>
-      <el-tab-pane label="样式"></el-tab-pane>
+      <el-tab-pane label="样式">
+        <div v-if="!vcomponent || !styleSchema">没有可以设置的样式</div>
+        <div v-else v-for="schema in styleSchema" class="form-item">
+          <div class="prop-name">
+            {{ schema.desc }}
+          </div>
+          <el-input-number
+            v-if="schema.type === 'number'"
+            :modelValue="vcomponent.styles![schema.name] || currentStyleValue(schema.name)"
+            @update:modelValue="(newValue: number) => vcomponent!.styles![schema.name] = newValue"
+          />
+          <el-input
+            v-else-if="schema.type === 'string'"
+            :modelValue="vcomponent.styles![schema.name] || currentStyleValue(schema.name)"
+            @update:modelValue="(newValue: string) => vcomponent!.styles![schema.name] = newValue"
+          >
+          </el-input>
+          <el-switch
+            v-else-if="schema.type === 'boolean'"
+            :modelValue="vcomponent.styles![schema.name] || currentStyleValue(schema.name)"
+            @update:modelValue="(newValue: boolean) => vcomponent!.styles![schema.name] = newValue"
+          />
+          <el-select
+            v-else-if="schema.type.endsWith('_select')"
+            :modelValue="vcomponent.styles![schema.name] || currentStyleValue(schema.name)"
+            @update:modelValue="(newValue: string) => vcomponent!.styles![schema.name] = newValue"
+          >
+            <el-option
+              v-for="option in schema.candidates"
+              :key="option"
+              :label="option"
+              :value="option"
+            />
+          </el-select>
+          <el-color-picker
+            v-else-if="schema.type === 'color'"
+            :modelValue="vcomponent.styles![schema.name] || currentStyleValue(schema.name)"
+            @update:modelValue="(newValue: string) => vcomponent!.styles![schema.name] = newValue"
+          />
+          <el-divider />
+        </div>
+      </el-tab-pane>
       <el-tab-pane label="事件"></el-tab-pane>
     </el-tabs>
   </div>
@@ -92,14 +150,8 @@ const propSchema = computed(() => {
 
   .prop-name {
     margin-bottom: 5px;
-    font-family: "Lucida Console", Monaco, monospace;
-  }
-
-  .prop-desc {
-    margin-top: 5px;
-    font-size: 0.8em;
     color: var(--secondary-text-color);
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9em;
   }
 }
 </style>

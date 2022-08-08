@@ -1,3 +1,11 @@
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "Home",
+});
+</script>
+
 <script setup lang="ts">
 import LibraryPanel from "../components/LibraryPanel.vue";
 import TreePanel from "../components/TreePanel.vue";
@@ -17,7 +25,9 @@ import Inspector from "../components/Inspector.vue";
       <div class="btn-group">
         <el-button> 保存到本地 </el-button>
         <el-button> 重置页面 </el-button>
-        <el-button type="primary"> 预览 </el-button>
+        <RouterLink to="/preview" target="_blank" style="margin: 0 12px;">
+          <el-button type="primary"> 预览 </el-button>
+        </RouterLink>
         <el-button type="primary"> 构建 </el-button>
       </div>
     </el-header>

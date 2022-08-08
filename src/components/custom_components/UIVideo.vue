@@ -2,18 +2,21 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "UIH1",
+  name: "UIVideo",
 });
 </script>
 
 <script setup lang="ts">
 defineProps<{
-  text?: string;
+  src?: string
 }>();
+// Test URL: https://media.w3.org/2010/05/sintel/trailer.mp4
 </script>
 
 <template>
-  <h1>{{ text || '一级标题' }}</h1>
+  <video :src="src" controls autoplay></video>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>

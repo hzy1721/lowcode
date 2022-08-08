@@ -1,6 +1,7 @@
 import {
   defineComponent,
   h,
+  onMounted,
   reactive,
   resolveComponent,
   type VNode,
@@ -8,16 +9,16 @@ import {
 import componentInfo from "@/assets/component_info";
 import { useAppStore } from "@/stores/app";
 
-class VComponent {
+export class VComponent {
   name: string;
   type: string;
-  props?: Record<string, any>;
+  props?: Record<string, any> = {};
+  styles?: Record<string, any> = {};
   children?: VComponent[];
 
   constructor(vcomponentType: string) {
     this.name = getUniqueName(vcomponentType);
     this.type = vcomponentType;
-    this.props = componentInfo[vcomponentType].defaultProps;
   }
 }
 
@@ -25,67 +26,8 @@ class VComponent {
 const page: VComponent = reactive({
   name: "home",
   type: "UIPage",
-  // children: [
-  //   {
-  //     name: "header",
-  //     type: "UIBlock",
-  //     children: [
-  //       {
-  //         name: "page title",
-  //         type: "UIH1",
-  //         props: {
-  //           text: "页面标题",
-  //         },
-  //       },
-  //       {
-  //         name: "page subtitle",
-  //         type: "UIH3",
-  //         props: {
-  //           text: "子标题",
-  //         },
-  //       },
-  //       // {
-  //       //   name: "test link",
-  //       //   type: "UILink",
-  //       //   props: {
-  //       //     text: "测试链接",
-  //       //     href: "https://baidu.com",
-  //       //   },
-  //       // },
-  //       // {
-  //       //   name: "test text",
-  //       //   type: "UIText",
-  //       //   props: {
-  //       //     text: "测试文本",
-  //       //   },
-  //       // },
-  //     ],
-  //   },
-  //   {
-  //     name: "main",
-  //     type: "UIBlock",
-  //     children: [
-  //       // {
-  //       //   name: "test image",
-  //       //   type: "Image",
-  //       // },
-  //       {
-  //         name: "test button",
-  //         type: "UIButton",
-  //         props: {
-  //           text: "测试按钮",
-  //           onClick: (e: MouseEvent) => {
-  //             alert("button clicked");
-  //           },
-  //         },
-  //       },
-  //       {
-  //         name: "test elementplus",
-  //         type: "ElCalendar",
-  //       },
-  //     ],
-  //   },
-  // ],
+  props: {},
+  styles: {},
 });
 
 function generateNameCache(vcomponent: VComponent): Set<string> {
@@ -170,7 +112,7 @@ export function searchVcomponent(id: string): VComponent | undefined {
 }
 
 function getUniqueName(vcomponentType: string): string {
-  let name = vcomponentType,
+  let name = vcomponentType.slice(2).toLowerCase(),
     idx = 2;
   while (nameSet.has(name)) {
     name = vcomponentType + idx;
@@ -296,6 +238,7 @@ const editableProps = (vcomponent: VComponent) => {
         "text/indices",
         JSON.stringify(layerIndices(page, node.id))
       );
+      e.dataTransfer?.setData("text/id", node.id);
       const appStore = useAppStore();
       appStore.activeComponent = "";
     },
@@ -327,14 +270,17 @@ const editableProps = (vcomponent: VComponent) => {
                 new VComponent(vcomponentType)
               );
             } else if (e.dataTransfer?.getData("text/indices")) {
-              const sourceIndices = JSON.parse(
-                e.dataTransfer.getData("text/indices")
-              );
-              moveVcomponent(
-                sourceIndices,
-                node,
-                cls === "inner" ? "inner" : cls.slice(5)
-              );
+              const id = e.dataTransfer.getData("text/id");
+              if (id !== node.id) {
+                const sourceIndices = JSON.parse(
+                  e.dataTransfer.getData("text/indices")
+                );
+                moveVcomponent(
+                  sourceIndices,
+                  node,
+                  cls === "inner" ? "inner" : cls.slice(5)
+                );
+              }
             }
             node.classList.remove(cls);
             break;
@@ -360,10 +306,9 @@ function renderDeep(vcomponent: VComponent): VNode {
     children.push(renderDeep(child));
   });
   const appStore = useAppStore();
-  const wrapTypeSet = new Set(["UILink", "UIButton"]);
-  const editTypeSet = new Set(["UIPage", "UIBlock", "ElImage"]);
-  return (vcomponent.type.startsWith("El") && vcomponent.type !== "ElImage") ||
-    wrapTypeSet.has(vcomponent.type)
+  const wrapTypeSet = new Set(["UILink", "UIButton", "UIVideo"]);
+  const editTypeSet = new Set(["UIPage", "UIBlock", "ElImage", "ElDivider"]);
+  return wrapTypeSet.has(vcomponent.type)
     ? h(
         "div",
         {
@@ -386,6 +331,7 @@ function renderDeep(vcomponent: VComponent): VNode {
           {
             ...vcomponent.props,
             style: {
+              ...vcomponent.styles,
               pointerEvents: "none",
             },
           },
@@ -407,6 +353,7 @@ function renderDeep(vcomponent: VComponent): VNode {
           ],
           id: vcomponent.name,
           draggable: "true",
+          style: vcomponent.styles,
         },
         children.length > 0 ? () => children : undefined
       );

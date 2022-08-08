@@ -27,6 +27,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
   user-select: none;
+  margin: 0;
 }
 
 a {
@@ -36,4 +37,8 @@ a {
 
 h3 {
   margin: 5px 0;
+}
+
+video {
+  vertical-align: top;
 }

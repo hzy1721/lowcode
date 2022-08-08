@@ -8,12 +8,12 @@ export default defineComponent({
 
 <script setup lang="ts">
 defineProps<{
-  text: string;
+  text?: string;
 }>();
 </script>
 
 <template>
-  <h3>{{ text }}</h3>
+  <h3>{{ text || '三级标题' }}</h3>
 </template>
 
 <style lang="scss" scoped></style>

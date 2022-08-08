@@ -15,8 +15,10 @@ declare module '@vue/runtime-core' {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
+    ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDivider: typeof import('element-plus/es')['ElDivider']
+    ElDividerEdit: typeof import('./src/components/custom_components/ElDividerEdit.vue')['default']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
@@ -72,5 +74,6 @@ declare module '@vue/runtime-core' {
     UIPageEdit: typeof import('./src/components/custom_components/UIPageEdit.vue')['default']
     UIText: typeof import('./src/components/custom_components/UIText.vue')['default']
     UITextEdit: typeof import('./src/components/custom_components/UITextEdit.vue')['default']
+    UIVideo: typeof import('./src/components/custom_components/UIVideo.vue')['default']
   }
 }
