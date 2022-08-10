@@ -16,6 +16,10 @@ interface IComponent {
     candidates?: string[];
     defaultValue?: any;
   }[];
+  eventSchema?: {
+    name: string;
+    desc: string;
+  }[];
 }
 
 const componentInfo: Record<string, IComponent> = {
@@ -268,6 +272,12 @@ const componentInfo: Record<string, IComponent> = {
         desc: "按钮文本",
         type: "string",
         defaultValue: "按钮",
+      },
+    ],
+    eventSchema: [
+      {
+        name: "click",
+        desc: "点击事件",
       },
     ],
   },

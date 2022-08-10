@@ -7,11 +7,12 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
+import CodeEditor from "../components/CodeEditor.vue";
 const color = ref();
 </script>
 
 <template>
-  <el-color-picker v-model="color" />
+  <CodeEditor />
 </template>
 
 <style lang="scss" scoped>

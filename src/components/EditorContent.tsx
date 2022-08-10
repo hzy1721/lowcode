@@ -14,6 +14,7 @@ export class VComponent {
   type: string;
   props?: Record<string, any> = {};
   styles?: Record<string, any> = {};
+  events?: Record<string, Function> = {};
   children?: VComponent[];
 
   constructor(vcomponentType: string) {

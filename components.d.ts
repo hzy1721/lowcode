@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Block: typeof import('./src/components/custom_components/Block.vue')['default']
+    CodeEditor: typeof import('./src/components/CodeEditor.vue')['default']
     ComponentList: typeof import('./src/components/ComponentList.vue')['default']
     copy: typeof import('./src/components/custom_components/UIText copy.vue')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']
@@ -19,6 +20,7 @@ declare module '@vue/runtime-core' {
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDivider: typeof import('element-plus/es')['ElDivider']
     ElDividerEdit: typeof import('./src/components/custom_components/ElDividerEdit.vue')['default']
+    ElDrawer: typeof import('element-plus/es')['ElDrawer']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']

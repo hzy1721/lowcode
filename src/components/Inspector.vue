@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { useAppStore } from "@/stores/app.js";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { searchVcomponent, removeVcomponentById } from "./EditorContent";
 import componentInfo from "@/assets/component_info.js";
+import CodeEditor from "./CodeEditor.vue";
+import * as monaco from "monaco-editor";
+import { ElMessage } from "element-plus";
 
 const appStore = useAppStore();
 const vcomponent = computed(() => searchVcomponent(appStore.activeComponent));
@@ -18,20 +21,51 @@ const styleSchema = computed(() => {
   }
   return componentInfo[vcomponent.value.type].styleSchema;
 });
+const eventSchema = computed(() => {
+  if (!vcomponent.value) {
+    return undefined;
+  }
+  return componentInfo[vcomponent.value.type].eventSchema;
+});
 
 function currentStyleValue(name: string) {
   const el = document.getElementById(vcomponent.value!.name);
   if (!el || !(name in el.style)) {
-    return '';
+    return "";
   }
   return (el?.style as Record<string, any>)[name];
+}
+
+const showCodeEditor = ref(false);
+
+function saveEventHandler(name: string) {
+  const funcBody = monaco.editor
+    .getModels()[0]
+    .getLinesContent()
+    .slice(1, -1)
+    .join("\n");
+  const func = new Function("event", funcBody);
+  if (!vcomponent.value) {
+    return;
+  }
+  if (!vcomponent.value.events) {
+    vcomponent.value.events = {};
+  }
+  vcomponent.value!.events[name] = func;
+  ElMessage({
+    message: `${name} 事件处理函数保存成功`,
+    type: 'success',
+  });
+  showCodeEditor.value = false;
 }
 </script>
 
 <template>
   <div class="inspector">
     <div class="header">
-      <h3 v-if="vcomponent">{{ vcomponent?.name }} ({{ componentInfo[vcomponent?.type].zh }})</h3>
+      <h3 v-if="vcomponent">
+        {{ vcomponent?.name }} ({{ componentInfo[vcomponent?.type].zh }})
+      </h3>
       <h3 v-else>未选中组件</h3>
       <el-popconfirm
         v-if="vcomponent && vcomponent.type !== 'UIPage'"
@@ -126,7 +160,42 @@ function currentStyleValue(name: string) {
           <el-divider />
         </div>
       </el-tab-pane>
-      <el-tab-pane label="事件"></el-tab-pane>
+      <el-tab-pane label="事件">
+        <div v-if="!vcomponent || !eventSchema">没有可以设置的事件</div>
+        <div v-else v-for="schema in eventSchema" class="form-item">
+          <div class="prop-name">
+            {{ schema.desc }}
+          </div>
+          <el-button @click="showCodeEditor = true">写代码</el-button>
+          <el-drawer
+            v-model="showCodeEditor"
+            direction="rtl"
+            :append-to-body="true"
+          >
+            <template #header>
+              <h3>{{ schema.desc }}</h3>
+            </template>
+            <template #default>
+              <CodeEditor
+                :event="schema.name"
+                :code="
+                  vcomponent.events && vcomponent.events[schema.name]
+                    ? vcomponent.events[schema.name].toString()
+                    : undefined
+                "
+              />
+            </template>
+            <template #footer>
+              <div style="flex: auto">
+                <el-button @click="showCodeEditor = false">取消</el-button>
+                <el-button type="primary" @click="saveEventHandler(schema.name)"
+                  >确认</el-button
+                >
+              </div>
+            </template>
+          </el-drawer>
+        </div>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
